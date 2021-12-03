@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <div v-show="!playingWindow" class="menu">
-      请输入你的昵称
-      <input v-model="nickname">
-      <div class="choice" @click="initGame('host')">创建房间</div>
-      <div class="choice">
+  <div id="container">
+    <div id="navigator" v-show="!playingWindow">
+      <div class="menu" v-if="navigator">
+        <div class="btn" @click="createRoomButton">我要创建房间</div>
+        <div class="btn" @click="enterRoomButton">我要加入房间</div>
+      </div>
+      <div class="menu" v-else-if="choice">
+        <h2>请输入你的昵称</h2>
+        <input v-model="nickname">
+        <div class="btn" @click="initGame('host')" >创建房间</div>
+        <div @click="navigator = true">back</div>
+      </div>
+      <div class="menu" v-else>
+        <h3>请输入你的昵称</h3>
+
+        <input v-model="nickname">
+        <h3>请输入房间号</h3>
+
         <input v-model="roomNumber">
-        <p @click="initGame('guest')" style="border: solid">加入房间</p>
+        <p @click="initGame('guest')" class="btn" >加入房间</p>
+        <div @click="navigator = true">back</div>
       </div>
     </div>
     <div v-show="playingWindow">
@@ -42,11 +55,13 @@ export default {
       path:"ws://10.250.169.243:8080",
       msg:{
         sender:"client",
-        name:"",
+        name:"嘉琳今天吃浩睿",
         content:[],
       },
 
       playingWindow:false,
+      navigator:true,
+      choice:true,
       rows:[0,1,2,3,4,5,6,7,8,9],
       column:[0,1,2,3,4,5,6,7,8,9],
       tipBar:"游戏开始",
@@ -70,6 +85,14 @@ export default {
     }
   },
   methods:{
+    createRoomButton(){
+      this.navigator = false;
+      this.choice = true;
+    },
+    enterRoomButton(){
+      this.navigator = false;
+      this.choice = false;
+    },
     initGame(role){
       if(this.nickname === ""){
     //    这里得改一下判断
@@ -216,15 +239,33 @@ export default {
 </script>
 
 <style scoped>
-.menu{
-  height: 60%;
-  width: 60%;
-  border: solid;
+#container{
+  height: 100%;
+  width: 100%;
+  margin: auto;
   text-align: center;
 }
-.choice{
+#navigator{
+  height: 60%;
+  width: 80%;
+  margin: 0 auto;
+}
+input{
+  height: 30px;
+}
+.menu{
+  height: 100%;
+  width: 100%;
   border: solid;
-  text-align: center;
+  border-radius: 10%;
+}
+.btn{
+  border: solid;
+  border-radius: 10%;
+  width: 50%;
+  height: 25%;
+  margin: 50px auto;
+  line-height: 120px;
 }
 .userinfo{
   width: 464px;
