@@ -129,14 +129,20 @@ export default {
         alert("房间创建成功，房间号为"+this.roomNumber);
         alert("请等待玩家进入房间");
       }
-      if(msgName === "hostNickname"){
-        this.playerInfo.host.nickname = messageBody.content[0];
-      }
+      // if(msgName === "hostNickname"){
+      //   this.playerInfo.host.nickname = messageBody.content[0];
+      // }
       if(msgName === "hostStartGame"){
         this.playerInfo.guest.nickname = messageBody.content[0];
         this.role.color = messageBody.content[1];
-        if(this.role.color === 'black') this.role.turn = true;
-        else this.role.turn = false;
+        if(this.role.color === 'black') {
+          this.role.turn = true;
+          alert("你是先手")
+        }
+        else {
+          this.role.turn = false;
+          alert("你是后手")
+        }
         this.playingWindow = true;
       }
       if(msgName === "guestStartGame"){
@@ -144,8 +150,14 @@ export default {
         this.playerInfo.guest.nickname = this.nickname;
         this.playerInfo.host.nickname = messageBody.content[0];
         this.role.color = messageBody.content[1];
-        if(this.role.color === 'black') this.role.turn = true;
-        else this.role.turn = false;
+        if(this.role.color === 'black') {
+          this.role.turn = true;
+          alert("你是先手")
+        }
+        else {
+          this.role.turn = false;
+          alert("你是后手")
+        }
         this.playingWindow = true;
       }
       if(msgName === "opponentStep"){
@@ -191,6 +203,7 @@ export default {
         this.msg.name = "step";
         this.msg.content = [];
         this.msg.content.push(""+location)
+        console.log(JSON.stringify((this.msg)));
         this.socket.send(JSON.stringify(this.msg));
         this.role.turn = false;
       }else{
