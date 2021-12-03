@@ -8,6 +8,7 @@
       <div class="menu" v-else-if="choice">
         <h2>请输入你的昵称</h2>
         <input v-model="nickname">
+        <h3>房间号为：{{this.roomNumber}}</h3>
         <div class="btn" @click="initGame('host')" >创建房间</div>
         <div @click="navigator = true">back</div>
       </div>
@@ -67,7 +68,7 @@ export default {
       tipBar:"游戏开始",
 
       nickname:"",
-      roomNumber:"",
+      roomNumber:"输入昵称后创建房间即可获得房间号",
 
       role:{
         color:"",
