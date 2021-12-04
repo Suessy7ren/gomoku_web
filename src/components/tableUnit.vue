@@ -23,6 +23,9 @@ export default {
   },
   emits:['choose'],
   methods:{
+    init(){
+      this.unit = this.bg;
+    },
     turnBlack(){
       this.unit = this.black;
     },
@@ -30,7 +33,9 @@ export default {
       this.unit = this.white;
     },
     choosing(){
-      this.$emit('choose')
+      if(this.unit===this.bg){
+        this.$emit('choose')
+      }
     }
   },
 }

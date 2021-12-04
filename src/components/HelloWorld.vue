@@ -8,10 +8,11 @@
 </template>
 
 <script>
+import config from "../config"
 export default {
   data () {
     return {
-      path:"ws://10.250.169.243:8080",
+      path:"ws://"+config.address,
       socket:"",
       msgSend:""
     }
